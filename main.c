@@ -74,11 +74,13 @@ int main( int nargs, char *args[] ) {
 		else
 			last_move=player_event();
 			
-		check_end( last_move ); /* wait for player input and check end */
+		moves++;
+		if (!drop_dead) 
+			drop_dead = check_end( last_move ); /* wait for player input and check end */
 		player=moves%2+1; /* change current player */
 	}
 	
-	if (game_alive()==2) /* game draw */
+	if (drop_dead==2) /* game draw */
 		notify("- GAME DRAW -");
 	else /* report winner */
 		if (player==1)

@@ -22,6 +22,9 @@
 #ifndef AI_H
 #define AI_H
 
-int ai_event(void);
+int ai_event( void );
+int tryToWin( int sym );
+int tryToBlock( void );
+int moveSomwhere( void );
 
 #endif

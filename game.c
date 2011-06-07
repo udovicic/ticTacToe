@@ -23,7 +23,7 @@
  
 int game_block( void ) {
 	/* blocks game so it can't wuit before player can see result */
-   SDL_PollEvent(&event);
+   SDL_WaitEvent(&event);
    if (event.type == SDL_QUIT ) return 0;
    if (event.key.keysym.sym == SDLK_ESCAPE ) return 0;
    return 1;   
@@ -47,16 +47,15 @@ int player_event( void ) { /* grab user input */
 	int i=-1;
 	while (i==-1) {
 		SDL_WaitEvent(&event);
-		if (event.type == SDL_QUIT) {drop_dead=1; i--;};
+		if (event.type == SDL_QUIT) {drop_dead=2; i=-2;};
 		if (event.type == SDL_MOUSEBUTTONDOWN) {
 			if (event.button.button == SDL_BUTTON_LEFT) {
 				i=event.button.x/200;
 				i=i + ((event.button.y/200)*3);
 				if (field[i]==0) {
 					field[i]=player;
-					moves++;
-					drop_dead = check_end(i);
-				}
+				} else
+					i=-1;
 			}
 		}
 	}
