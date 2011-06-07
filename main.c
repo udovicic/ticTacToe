@@ -23,24 +23,22 @@
 #include <SDL/SDL_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "main.h"
 #include "graphics.h"
 #include "game.h"
-
-void go_away( void ) {
-	SDL_Quit();
-	TTF_Quit();
-}
+#include "ai.h"
+#include "main.h"
 
 int main( int nargs, char *args[] ) {
 	
-	int nAI;
+	int nAI, last_move;
 	char *program;
 	/* licence info */
-	printf("TicTacToe is free software: you can redistribute it and/or modify"
-			"it under the terms of the GNU General Public License as published by"
-			"the Free Software Foundation, either version 3 of the License, or"
+	printf("TicTacToe is free software: you can redistribute it and/or modify "
+			"it under the terms of the GNU General Public License as published by "
+			"the Free Software Foundation, either version 3 of the License, or "
 			"(at your option) any later version.\n"
-			"Source code available at http://code.udovicic.org/wumpus-world\n\n");
+			"Source code available at http://code.udovicic.org/tictactoe\n\n");
 	
 	nAI=0;
 	program = args[0];
@@ -50,7 +48,7 @@ int main( int nargs, char *args[] ) {
 			case 'a': nAI=atoi(&args[1][2]);break;
 			default:
 				printf("Usage\n  %s <options>\n"
-						"  -a<n>\t\t Number of AI players\n",program);
+						"  -a<n>\t\t Number of AI players(0/1/2)\n",program);
 				return 0;
 				break;
 		}
@@ -71,7 +69,12 @@ int main( int nargs, char *args[] ) {
 	/* game loop */
 	while(game_alive()) {
 		draw(); /* draw screen */
-		check_end( player_event() ); /* wait for player input and check end */
+		if ((player==0 && nAI!=0) || (nAI==2) )
+			last_move=ai_event();
+		else
+			last_move=player_event();
+			
+		check_end( last_move ); /* wait for player input and check end */
 		player=moves%2+1; /* change current player */
 	}
 	
@@ -88,4 +91,9 @@ int main( int nargs, char *args[] ) {
 	
 	go_away(); 
 	return 0;
+}
+
+void go_away( void ) {
+	SDL_Quit();
+	TTF_Quit();
 }

@@ -24,11 +24,10 @@
 #include <SDL/SDL_image.h>
 #include <stdio.h>
 #include "graphics.h"
-#include "game.h"
+#include "main.h"
    
-/* init SDL graphics */
-int init_graphics(void) {
-	
+int init_graphics(void) { /* init SDL graphics */
+
 	/* init SDL */
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		perror("Faile to init SDL");
@@ -56,8 +55,7 @@ int init_graphics(void) {
 	return 0;
 }
 
-/* load sprites */
-int load_sprites(void) {
+int load_sprites(void) { /* load sprites */
 	rS.w=200;rS.h=200;
 	
 	x = IMG_Load("resources/x.png");
@@ -95,7 +93,7 @@ int load_sprites(void) {
 }
 
 
-int notify(char * msg) {
+int notify(char * msg) { /* display on screen message */
    SDL_Color text_color = {80,80,80};
    SDL_Rect rect;
    message = TTF_RenderText_Solid(font, msg, text_color);
@@ -113,7 +111,7 @@ int notify(char * msg) {
    return 0;
 }
 
-void draw( void ) {
+void draw( void ) { /* draw frame */
 	int i;
 	
 	SDL_BlitSurface(back,NULL,disp,&rB);

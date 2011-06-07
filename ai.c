@@ -1,5 +1,5 @@
 /*
- *	game.h
+ *	ai.c
  * 
  *	Copyright 2011 Stjepan Udovičić <udovicic.stjepan@gmail.com>
  *	      
@@ -19,18 +19,8 @@
  *	along with TicTacToe.  If not, see <http://www.gnu.org/licenses/>.
  */	 
 
-#ifndef GAME_H
-#define GAME
+#include "game.h"
 
-#include <SDL/SDL.h>
-
-SDL_Event event;
-int drop_dead; /* for end game event */
- 
-void init_game( void );
-int game_block( void );
-int game_alive( void );
-int player_event( void );
-int check_end( int last_move );
-
-#endif
+int ai_event(void) {
+	return 0;
+}

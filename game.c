@@ -19,15 +19,17 @@
  *	along with TicTacToe.  If not, see <http://www.gnu.org/licenses/>.
  */	 
 #include "game.h"
+#include "main.h"
  
-int game_block( void ) { 
+int game_block( void ) {
+	/* blocks game so it can't wuit before player can see result */
    SDL_PollEvent(&event);
    if (event.type == SDL_QUIT ) return 0;
    if (event.key.keysym.sym == SDLK_ESCAPE ) return 0;
    return 1;   
 }
 
-void init_game( void ) {
+void init_game( void ) { /* initialize all game variables */
 	int i;
 	for (i=0;i<9;i++) field[i]=0;
 	
@@ -36,12 +38,12 @@ void init_game( void ) {
 	moves=0;
 }
 
-int game_alive( void ) {
+int game_alive( void ) { /* used as control for main game loop */
 	if (drop_dead) return 0;
 	return 1;
 }
 
-int player_event( void ) {
+int player_event( void ) { /* grab user input */
 	int i=-1;
 	while (i==-1) {
 		SDL_WaitEvent(&event);
@@ -83,7 +85,4 @@ int check_end( int last_move ) {
 	if (moves==9) return 2; /* no more moves? */
 	
 	return 0;
-}
-void game_doMagic( void ) {
-	
 }
