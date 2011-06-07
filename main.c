@@ -70,8 +70,9 @@ int main( int nargs, char *args[] ) {
 
 	/* game loop */
 	while(game_alive()) {
-		game_event();
-		draw();
+		draw(); /* draw screen */
+		check_end( player_event() ); /* wait for player input and check end */
+		player=moves%2+1; /* change current player */
 	}
 	
 	if (game_alive()==2) /* game draw */
