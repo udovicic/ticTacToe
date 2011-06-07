@@ -69,7 +69,7 @@ int main( int nargs, char *args[] ) {
 	/* game loop */
 	while(game_alive()) {
 		draw(); /* draw screen */
-		if ((player==0 && nAI!=0) || (nAI==2) )
+		if ((player==2 && nAI!=0) || (nAI==2) )
 			last_move=ai_event();
 		else
 			last_move=player_event();
