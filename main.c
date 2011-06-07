@@ -69,12 +69,19 @@ int main( int nargs, char *args[] ) {
 	init_game();
 
 	/* game loop */
-	while(game_live()) {
+	while(game_alive()) {
 		game_event();
 		draw();
 	}
 	
-	notify("END!!");
+	if (game_alive()==2) /* game draw */
+		notify("- GAME DRAW -");
+	else /* report winner */
+		if (player==1)
+			notify("O win!");
+		else
+			notify("X win!");
+			
 	/* exit loop */
 	while (game_block());
 	

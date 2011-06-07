@@ -36,8 +36,9 @@ void init_game( void ) {
 	moves=0;
 }
 
-int game_live( void ) {
-	return !drop_dead;
+int game_alive( void ) {
+	if (drop_dead) return 0;
+	return 1;
 }
 
 void game_event( void ) {
@@ -51,13 +52,40 @@ void game_event( void ) {
 			if (field[i]==0) {
 				field[i]=player;
 				moves++;
+				drop_dead = check_end(i);
 				player=moves%2+1;
-				game_doMagic();
 			}
 		}
 	}
 }
 
+int check_end( int last_move ) {
+	int i;
+	
+	printf("check row:%d - %d\n",last_move-last_move%3,last_move+(3-last_move%3));
+	for (i=last_move-last_move%3; i<last_move+(3-last_move%3); i++) /* check row */
+		if (field[i]!=player) break;
+	if (i==last_move+(3-last_move%3)) return 1;
+	
+	printf("check col\n");
+	for (i=last_move%3; i<9; i+=3) /* check col */
+		if (field[i]!=player) break;
+	if (i>=9) return 1;
+	
+	printf("check diag\n");
+	for (i=0;i<9;i+=4) /* check main diag */
+		if (field[i]!=player) break;
+	if (i>9) return 1;
+	
+	printf("check anti\n\n");
+	for (i=2;i<7;i+=2) /* chek anti diag */
+		if (field[i]!=player) break;
+	if (i>7) return 1;
+		
+	if (moves==9) return 2; /* no more moves? */
+	
+	return 0;
+}
 void game_doMagic( void ) {
-	if (moves==9) drop_dead=1;
+	
 }

@@ -32,8 +32,9 @@ int drop_dead, /* for end game event */
  
 void init_game( void );
 int game_block( void );
-int game_live( void );
+int game_alive( void );
 void game_event( void );
 void game_doMagic( void );
+int check_end( int last_move );
 
 #endif
